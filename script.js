@@ -1,53 +1,40 @@
-// Function to set a cookie
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = "expires=" + date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
+//your JS code here. If required.
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const existingButton = document.getElementById('existing');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const checkbox = document.getElementById('checkbox');
 
-// Function to get a cookie by name
-function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArr = decodedCookie.split(';');
-    for (let i = 0; i < cookieArr.length; i++) {
-        let cookie = cookieArr[i].trim();
-        if (cookie.indexOf(name + "=") === 0) {
-            return cookie.substring(name.length + 1);
+    // Load saved credentials if they exist
+    const savedUsername = localStorage.getItem('username');
+    const savedPassword = localStorage.getItem('password');
+
+    if (savedUsername && savedPassword) {
+        existingButton.style.display = 'block';
+        existingButton.textContent = `Login as existing user`;
+    }
+
+    // Form submit event
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent form from submitting the traditional way
+
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+
+        if (checkbox.checked) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+        } else {
+            localStorage.removeItem('username');
+            localStorage.removeItem('password');
         }
-    }
-    return "";
-}
 
-// Function to apply preferences from cookies
-function applyPreferences() {
-    const fontSize = getCookie("fontsize");
-    const fontColor = getCookie("fontcolor");
+        alert(`Logged in as ${username}`);
+    });
 
-    if (fontSize) {
-        document.documentElement.style.setProperty('--fontsize', fontSize + "px");
-        document.getElementById('fontsize').value = fontSize;
-    }
-    if (fontColor) {
-        document.documentElement.style.setProperty('--fontcolor', fontColor);
-        document.getElementById('fontcolor').value = fontColor;
-    }
-}
-
-// Form submission event handler
-document.getElementById('preferencesForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const fontSize = document.getElementById('fontsize').value;
-    const fontColor = document.getElementById('fontcolor').value;
-
-    // Save preferences to cookies
-    setCookie("fontsize", fontSize, 30);
-    setCookie("fontcolor", fontColor, 30);
-
-    // Apply preferences
-    applyPreferences();
+    // Existing user button click event
+    existingButton.addEventListener('click', () => {
+        alert(`Logged in as ${savedUsername}`);
+    });
 });
-
-// Apply preferences on page load
-applyPreferences();
