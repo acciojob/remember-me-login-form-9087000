@@ -1,42 +1,50 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+//your JS code here. If required.
+// DOM Elements
+const loginForm = document.getElementById('login-form');
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+const checkbox = document.getElementById('checkbox');
+const existingUserContainer = document.getElementById('existing-user-container');
 
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
-    let rememberMe = document.getElementById('checkbox').checked;
+// Load existing user data from local storage
+function loadExistingUser() {
+  const savedUsername = localStorage.getItem('username');
+  const savedPassword = localStorage.getItem('password');
 
-    if (rememberMe) {
-        localStorage.setItem('username', username);
-        localStorage.setItem('password', password);
-    } else {
-        localStorage.removeItem('username');
-        localStorage.removeItem('password');
-    }
+  if (savedUsername && savedPassword) {
+    // Create "Login as existing user" button
+    const existingUserButton = document.createElement('button');
+    existingUserButton.id = 'existing';
+    existingUserButton.textContent = 'Login as existing user';
+    existingUserButton.onclick = () => alert(`Logged in as ${savedUsername}`);
 
-    alert(`Logged in as ${username}`);
+    existingUserContainer.appendChild(existingUserButton);
+  }
+}
 
-    let savedUsername = localStorage.getItem('username');
-    let savedPassword = localStorage.getItem('password');
+// Handle form submission
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-    if (savedUsername && savedPassword) {
-        document.getElementById('existing').style.display = 'block';
-    } else {
-        document.getElementById('existing').style.display = 'none';
-    }
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+
+  if (checkbox.checked) {
+    // Save username and password in local storage
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
+  } else {
+    // Remove username and password from local storage
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+  }
+
+  alert(`Logged in as ${username}`);
+
+  // Reload the existing user button if necessary
+  existingUserContainer.innerHTML = '';
+  loadExistingUser();
 });
 
-document.getElementById('existing').addEventListener('click', function() {
-    let savedUsername = localStorage.getItem('username');
-    alert(`Logged in as ${savedUsername}`);
-});
-
-window.onload = function() {
-    let savedUsername = localStorage.getItem('username');
-    let savedPassword = localStorage.getItem('password');
-
-    if (savedUsername && savedPassword) {
-        document.getElementById('username').value = savedUsername;
-        document.getElementById('password').value = savedPassword;
-        document.getElementById('existing').style.display = 'block';
-    }
-};
+// Initial load to check for existing user data
+loadExistingUser();
