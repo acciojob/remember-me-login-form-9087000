@@ -1,7 +1,7 @@
 //your JS code here. If required.
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
-    const existingButton = document.getElementById('existing');
+    // const existingButton = document.getElementById('existing');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const checkbox = document.getElementById('checkbox');
@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedUsername = localStorage.getItem('username');
     const savedPassword = localStorage.getItem('password');
 
+	const existingButton = document.getElementById('existing');
+    const savedUsername = localStorage.getItem('username');
+    const savedPassword = localStorage.getItem('password');
+
+    if (savedUsername && savedPassword) {
+        existingButton.style.display = 'block';
+        existingButton.textContent = `Login as existing user`;
+    }
     if (savedUsername && savedPassword) {
         existingButton.style.display = 'block';
         existingButton.textContent = `Login as existing user`;
