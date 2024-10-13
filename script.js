@@ -18,10 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         existingButton.style.display = 'block';
         existingButton.textContent = `Login as existing user`;
     }
-    if (savedUsername && savedPassword) {
-        existingButton.style.display = 'block';
-        existingButton.textContent = `Login as existing user`;
-    }
 
     // Form submit event
     loginForm.addEventListener('submit', (e) => {
