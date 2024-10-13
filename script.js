@@ -1,36 +1,31 @@
-window.onload = function () {
-    // Clear localStorage for Cypress test
-    localStorage.clear();
-    
-    // Check if saved username and password exist
-    if (localStorage.getItem("username") && localStorage.getItem("password")) {
-        document.getElementById("existing").style.display = "block";
+//your JS code here. If required.
+
+let nameInput = document.getElementById('username');
+let passwordInput = document.getElementById("password");
+let checkInput = document.getElementById("checkbox");
+let sbutton = document.getElementById("submit");
+var name;
+var password;
+var check;
+
+nameInput.addEventListener('input', () => {
+    name = nameInput.value;
+    // console.log(name)
+});
+
+passwordInput.addEventListener('input', () => {
+    password = passwordInput.value;
+});
+
+checkInput.addEventListener("input", () => {
+      check = checkInput.checked;
+      // console.log('check');
+});
+
+sbutton.addEventListener('click', () => {
+    if(check){
+      localStorage.setItem('username',name);
+      localStorage.setItem('password',password);
     }
-
-    // Existing user button functionality
-    document.getElementById("existing").onclick = function () {
-        let savedUsername = localStorage.getItem("username");
-        alert(`Logged in as ${savedUsername}.`);
-    };
-
-    // Form submit functionality
-    document.getElementById("loginForm").onsubmit = function (e) {
-        e.preventDefault();  // Prevent form submission for demo purposes
-
-        let username = document.getElementById("username").value;
-        let password = document.getElementById("password").value;
-        let rememberMe = document.getElementById("rememberMe").checked;
-
-        if (rememberMe) {
-            // Save username and password to localStorage if "Remember Me" is checked
-            localStorage.setItem("username", username);
-            localStorage.setItem("password", password);
-        } else {
-            // Remove username and password from localStorage if "Remember Me" is unchecked
-            localStorage.removeItem("username");
-            localStorage.removeItem("password");
-        }
-
-        alert(`Logged in as ${username}.`);
-    };
-};
+    alert(`Logged in as ${name}`);
+});
