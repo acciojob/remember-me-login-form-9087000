@@ -1,16 +1,12 @@
 //your JS code here. If required.
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
-    // const existingButton = document.getElementById('existing');
+    const existingButton = document.getElementById('existing');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const checkbox = document.getElementById('checkbox');
 
     // Load saved credentials if they exist
-    const savedUsername = localStorage.getItem('username');
-    const savedPassword = localStorage.getItem('password');
-
-	const existingButton = document.getElementById('existing');
     const savedUsername = localStorage.getItem('username');
     const savedPassword = localStorage.getItem('password');
 
