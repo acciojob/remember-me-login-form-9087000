@@ -1,30 +1,36 @@
-//your JS code here. If required.
-window onLoad = function(){
- if(localStorage.getItem("username") && localStorage.getItem("password")){
-	 document.getElementById("existing").style.display = "block";
- }
+window.onload = function () {
+    // Clear localStorage for Cypress test
+    localStorage.clear();
+    
+    // Check if saved username and password exist
+    if (localStorage.getItem("username") && localStorage.getItem("password")) {
+        document.getElementById("existing").style.display = "block";
+    }
 
- document.getElementById("existing").onClick = function() {
-	 let savedUSerName = localStorage.getItem("username");
-	 alert ("logged in as ${savedUsername}.");
- }	
+    // Existing user button functionality
+    document.getElementById("existing").onclick = function () {
+        let savedUsername = localStorage.getItem("username");
+        alert(`Logged in as ${savedUsername}.`);
+    };
 
- document.getElementById("loginForm").onSubmit = function(e) {
-	 e.preventDefault();
+    // Form submit functionality
+    document.getElementById("loginForm").onsubmit = function (e) {
+        e.preventDefault();  // Prevent form submission for demo purposes
 
-	 let userName = document.getElementById("username").value;
-	 let password = document.getElementById("password").value;
-     let rememberMe = document.getElementById("rememberMe").checked;
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        let rememberMe = document.getElementById("rememberMe").checked;
 
-	 if(rememberMe) {
-		 localStorage.setItem("username", username);
-		 localStorage.setItem("password", password);
-	 } else {
-		 localStorage.removeItem("username");
-		 localStorage.removeITem("password");
-	 }
+        if (rememberMe) {
+            // Save username and password to localStorage if "Remember Me" is checked
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+        } else {
+            // Remove username and password from localStorage if "Remember Me" is unchecked
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+        }
 
-	  alert(`Logged in as ${username}.`);
- };	
-	
+        alert(`Logged in as ${username}.`);
+    };
 };
