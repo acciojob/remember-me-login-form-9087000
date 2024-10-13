@@ -1,28 +1,23 @@
-//your JS code here. If required.
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
+// script.js
+document.addEventListener('DOMContentLoaded', (event) => {
+    const loginForm = document.getElementById('login-form');
     const existingButton = document.getElementById('existing');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const checkbox = document.getElementById('checkbox');
 
-    // Load saved credentials if they exist
-    const savedUsername = localStorage.getItem('username');
-    const savedPassword = localStorage.getItem('password');
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
 
-    if (savedUsername && savedPassword) {
+    if (storedUsername && storedPassword) {
         existingButton.style.display = 'block';
-        existingButton.textContent = `Login as existing user`;
     }
 
-    // Form submit event
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent form from submitting the traditional way
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
 
-        const username = usernameInput.value;
-        const password = passwordInput.value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('checkbox').checked;
 
-        if (checkbox.checked) {
+        if (rememberMe) {
             localStorage.setItem('username', username);
             localStorage.setItem('password', password);
         } else {
@@ -33,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert(`Logged in as ${username}`);
     });
 
-    // Existing user button click event
     existingButton.addEventListener('click', () => {
-        alert(`Logged in as ${savedUsername}`);
+        alert(`Logged in as ${storedUsername}`);
     });
 });
