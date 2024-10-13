@@ -1,31 +1,42 @@
-//your JS code here. If required.
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-let nameInput = document.getElementById('username');
-let passwordInput = document.getElementById("password");
-let checkInput = document.getElementById("checkbox");
-let sbutton = document.getElementById("submit");
-var name;
-var password;
-var check;
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let rememberMe = document.getElementById('checkbox').checked;
 
-nameInput.addEventListener('input', () => {
-    name = nameInput.value;
-    // console.log(name)
-});
-
-passwordInput.addEventListener('input', () => {
-    password = passwordInput.value;
-});
-
-checkInput.addEventListener("input", () => {
-      check = checkInput.checked;
-      // console.log('check');
-});
-
-sbutton.addEventListener('click', () => {
-    if(check){
-      localStorage.setItem('username',name);
-      localStorage.setItem('password',password);
+    if (rememberMe) {
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+    } else {
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
     }
-    alert(`Logged in as ${name}`);
+
+    alert(`Logged in as ${username}`);
+
+    let savedUsername = localStorage.getItem('username');
+    let savedPassword = localStorage.getItem('password');
+
+    if (savedUsername && savedPassword) {
+        document.getElementById('existing').style.display = 'block';
+    } else {
+        document.getElementById('existing').style.display = 'none';
+    }
 });
+
+document.getElementById('existing').addEventListener('click', function() {
+    let savedUsername = localStorage.getItem('username');
+    alert(`Logged in as ${savedUsername}`);
+});
+
+window.onload = function() {
+    let savedUsername = localStorage.getItem('username');
+    let savedPassword = localStorage.getItem('password');
+
+    if (savedUsername && savedPassword) {
+        document.getElementById('username').value = savedUsername;
+        document.getElementById('password').value = savedPassword;
+        document.getElementById('existing').style.display = 'block';
+    }
+};
