@@ -1,34 +1,37 @@
-// script.js
-document.addEventListener('DOMContentLoaded', (event) => {
-    const loginForm = document.getElementById('login-form');
-    const existingButton = document.getElementById('existing');
+//your JS code here. If required.
 
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
+const loginForm = document.getElementById("login-form"); 
 
-    if (storedUsername && storedPassword) {
-        existingButton.style.display = 'block';
-    }
+document.addEventListener('DOMContentLoaded',()=>{
+	const uName = localStorage.getItem("username");
+	const pWord = localStorage.getItem("password");
+	const exist = document.getElementById("existing")
+	if(uName && pWord){
+		exist.style.display="block"
+		exist.addEventListener('click',()=>{
+		alert(`Logged in as ${uName}`) 
+	})
+	}else{
+		exist.style.display="none"
+	}
 
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
+	loginForm.addEventListener("submit",(event)=>{
+	event.preventDefault();
+	const username = document.getElementById("username").value;
+	const password = document.getElementById("password").value;
+	const remember = document.getElementById("checkbox").checked;
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        const rememberMe = document.getElementById('checkbox').checked;
+	if(remember){
+		localStorage.setItem('username',username); 
+		localStorage.setItem('password', password);
+	}else{
+		localStorage.removeItem("username"); 
+		localStorage.removeItem("password");
+	}
+	alert(`Logged in as ${username}`)
+	document.getElementById("existing").style.display = "block"
 
-        if (rememberMe) {
-            localStorage.setItem('username', username);
-            localStorage.setItem('password', password);
-        } else {
-            localStorage.removeItem('username');
-            localStorage.removeItem('password');
-        }
-
-        alert(`Logged in as ${username}`);
-    });
-
-    existingButton.addEventListener('click', () => {
-        alert(`Logged in as ${storedUsername}`);
-    });
+	}); 
+	 
+	
 });
